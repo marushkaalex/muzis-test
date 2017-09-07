@@ -34,7 +34,7 @@ public class ArtistModel extends BaseModel {
         this.name = name;
     }
 
-    public static class Wrapper {
+    public static class Wrapper extends BaseModel {
         @JsonProperty("artist")
         private ArtistModel artist;
 
@@ -44,6 +44,19 @@ public class ArtistModel extends BaseModel {
 
         public void setArtist(ArtistModel artist) {
             this.artist = artist;
+        }
+    }
+
+    public static class ListWrapper extends BaseModel {
+        @JsonProperty("artist_list")
+        private java.util.List<Wrapper> artistList;
+
+        public java.util.List<Wrapper> getArtistList() {
+            return artistList;
+        }
+
+        public void setArtistList(java.util.List<Wrapper> artistList) {
+            this.artistList = artistList;
         }
     }
 }

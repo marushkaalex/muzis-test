@@ -10,9 +10,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import ru.muzis.muzistest.Consts;
 import ru.muzis.muzistest.model.ArtistModel;
-import ru.muzis.muzistest.model.BaseModel;
-import ru.muzis.muzistest.model.BaseResponseModel;
+import ru.muzis.muzistest.model.TrackModel;
 
 public class ApiInteractor {
     private ApiManager mApiManager;
@@ -32,7 +32,7 @@ public class ApiInteractor {
             Consumer<Throwable> onError
     ) {
 
-        return single(mApiManager.getTopArtists()
+        return single(mApiManager.getTopArtists(Consts.COUNTRY_CODE)
                 .map(i ->
                         Stream.of(i.getMessage().getBody().getArtistList())
                                 .map(ArtistModel.Wrapper::getArtist)
@@ -40,18 +40,16 @@ public class ApiInteractor {
                 .subscribe(onSuccess, onError);
     }
 
-    private static class ResponseBodyConsumer<I extends BaseModel, T extends BaseResponseModel<I>>
-            implements Consumer<T> {
+    public Disposable getTopTracks(
+            Consumer<List<TrackModel>> onSuccess,
+            Consumer<Throwable> onError
+    ) {
 
-        private Consumer<I> consumerToWrap;
-
-        public ResponseBodyConsumer(Consumer<I> consumerToWrap) {
-            this.consumerToWrap = consumerToWrap;
-        }
-
-        @Override
-        public void accept(T t) throws Exception {
-            consumerToWrap.accept(t.getMessage().getBody());
-        }
+        return single(mApiManager.getTopTracks(Consts.COUNTRY_CODE)
+                .map(i ->
+                        Stream.of(i.getMessage().getBody().getTrackList())
+                                .map(TrackModel.Wrapper::getTrack)
+                                .collect(Collectors.toList())))
+                .subscribe(onSuccess, onError);
     }
 }
