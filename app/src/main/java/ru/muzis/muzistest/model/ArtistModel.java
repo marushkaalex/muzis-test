@@ -33,4 +33,17 @@ public class ArtistModel extends BaseModel {
     public void setName(String name) {
         this.name = name;
     }
+
+    public static class Wrapper {
+        @JsonProperty("artist")
+        private ArtistModel artist;
+
+        public ArtistModel getArtist() {
+            return artist;
+        }
+
+        public void setArtist(ArtistModel artist) {
+            this.artist = artist;
+        }
+    }
 }

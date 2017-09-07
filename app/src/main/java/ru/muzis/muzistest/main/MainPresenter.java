@@ -4,20 +4,27 @@ import ru.muzis.muzistest.App;
 import ru.muzis.muzistest.api.ApiInteractor;
 import ru.muzis.muzistest.base.BasePresenterAbs;
 
-public class MainPresenterImpl extends BasePresenterAbs implements MainContract.Presenter {
+public class MainPresenter extends BasePresenterAbs implements MainContract.Presenter {
     private MainContract.View mView;
     private ApiInteractor mApiInteractor;
 
-    public MainPresenterImpl(MainContract.View view) {
+    public MainPresenter(MainContract.View view) {
         mView = view;
         mApiInteractor = App.getInstance().getApiInteractor();
     }
 
     @Override
     public void loadArtists() {
+        mView.showProgress();
         disposable(mApiInteractor.getTopArtists(
-                artists -> mView.showArtistList(artists),
-                error -> mView.showError(error)
+                artists -> {
+                    mView.hideProgress();
+                    mView.showArtistList(artists);
+                },
+                error -> {
+                    mView.hideProgress();
+                    mView.showError(error);
+                }
         ));
     }
 }

@@ -3,24 +3,14 @@ package ru.muzis.muzistest.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class BaseResponseModel<T extends BaseModel> extends BaseModel {
-    @JsonProperty("header")
-    private HeaderModel header;
-    @JsonProperty("body")
-    private T body;
+    @JsonProperty("message")
+    private MessageModel<T> message;
 
-    public HeaderModel getHeader() {
-        return header;
+    public MessageModel<T> getMessage() {
+        return message;
     }
 
-    public void setHeader(HeaderModel header) {
-        this.header = header;
-    }
-
-    public T getBody() {
-        return body;
-    }
-
-    public void setBody(T body) {
-        this.body = body;
+    public void setMessage(MessageModel<T> message) {
+        this.message = message;
     }
 }
