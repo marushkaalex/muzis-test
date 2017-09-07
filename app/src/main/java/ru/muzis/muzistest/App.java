@@ -12,12 +12,14 @@ import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.jackson.JacksonConverterFactory;
+import ru.muzis.muzistest.api.ApiInteractor;
 import ru.muzis.muzistest.api.ApiManager;
 
 public class App extends Application {
     private static App sInstance;
     private Retrofit mRetrofit;
     private ApiManager mApiManager;
+    private ApiInteractor mApiInteractor;
 
     @Override
     public void onCreate() {
@@ -30,14 +32,15 @@ public class App extends Application {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
                 .build();
         mApiManager = mRetrofit.create(ApiManager.class);
+        mApiInteractor = new ApiInteractor(mApiManager);
     }
 
     public static App getInstance() {
         return sInstance;
     }
 
-    public ApiManager getApiManager() {
-        return mApiManager;
+    public ApiInteractor getApiInteractor() {
+        return mApiInteractor;
     }
 
     private OkHttpClient createHttpClient() {
