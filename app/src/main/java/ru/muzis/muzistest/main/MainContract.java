@@ -14,9 +14,13 @@ public interface MainContract {
         void showProgress();
 
         void hideProgress();
+
+        void setRefreshing(boolean isRefreshing);
     }
 
     interface Presenter extends BasePresenter {
         void loadArtists();
+
+        void refresh();
     }
 }

@@ -1,5 +1,6 @@
 package ru.muzis.muzistest.main;
 
+import io.reactivex.disposables.Disposable;
 import ru.muzis.muzistest.App;
 import ru.muzis.muzistest.api.ApiInteractor;
 import ru.muzis.muzistest.base.BasePresenterAbs;
@@ -15,16 +16,37 @@ public class MainPresenter extends BasePresenterAbs implements MainContract.Pres
 
     @Override
     public void loadArtists() {
-        mView.showProgress();
-        disposable(mApiInteractor.getTopArtiststWithTopTracks(
+        loadArtists(false);
+    }
+
+    private void loadArtists(boolean isRefreshing) {
+        if (!isRefreshing) {
+            mView.showProgress();
+        }
+        Disposable topArtiststWithTopTracks = mApiInteractor.getTopArtiststWithTopTracks(
                 artists -> {
-                    mView.hideProgress();
+                    hideProgress(isRefreshing);
                     mView.showArtistList(artists);
                 },
                 error -> {
-                    mView.hideProgress();
+                    hideProgress(isRefreshing);
                     mView.showError(error);
                 }
-        ));
+        );
+        mDisposables.add(topArtiststWithTopTracks);
+    }
+
+    private void hideProgress(boolean isRefreshing) {
+        if (isRefreshing) {
+            mView.setRefreshing(false);
+        } else {
+            mView.hideProgress();
+        }
+    }
+
+    @Override
+    public void refresh() {
+        mDisposables.clear();
+        loadArtists(true);
     }
 }

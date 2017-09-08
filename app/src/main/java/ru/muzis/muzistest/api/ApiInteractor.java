@@ -6,9 +6,7 @@ import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -84,8 +82,7 @@ public class ApiInteractor {
                 .map(
                         map -> {
                             BaseResponseModel<ArtistModel.ListWrapper> model =
-                                    mApiManager.getTopArtists(Consts.COUNTRY_CODE, Consts.TOP_COUNT)
-                                            .toFuture().get();
+                                    mApiManager.getTopArtists(Consts.COUNTRY_CODE, Consts.TOP_COUNT).toFuture().get();
 
                             return Stream.of(model.getMessage().getBody().getArtistList())
                                     .map(i -> {
