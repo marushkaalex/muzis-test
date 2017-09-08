@@ -5,10 +5,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:textSize="18sp"
-        android:text="sdfsadf"
-        android:textColor="@color/text"
-        android:id="@+id/item_artist_title"
+        android:id="@+id/item_track_title"
         android:layout_margin="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
