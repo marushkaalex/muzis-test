@@ -38,7 +38,7 @@ public class ApiInteractor {
             Consumer<Throwable> onError
     ) {
 
-        return single(mApiManager.getTopArtists(Consts.COUNTRY_CODE)
+        return single(mApiManager.getTopArtists(Consts.COUNTRY_CODE, Consts.TOP_COUNT)
                 .map(i ->
                         Stream.of(i.getMessage().getBody().getArtistList())
                                 .map(ArtistModel.Wrapper::getArtist)
@@ -51,7 +51,7 @@ public class ApiInteractor {
             Consumer<Throwable> onError
     ) {
 
-        return single(mApiManager.getTopTracks(Consts.COUNTRY_CODE)
+        return single(mApiManager.getTopTracks(Consts.COUNTRY_CODE, Consts.TOP_COUNT)
                 .map(i ->
                         Stream.of(i.getMessage().getBody().getTrackList())
                                 .map(TrackModel.Wrapper::getTrack)
@@ -63,7 +63,7 @@ public class ApiInteractor {
             Consumer<List<ArtistModel>> onSuccess,
             Consumer<Throwable> onError
     ) {
-        return single(mApiManager.getTopTracks(Consts.COUNTRY_CODE)
+        return single(mApiManager.getTopTracks(Consts.COUNTRY_CODE, Consts.TOP_COUNT)
                 .map(i -> {
                     List<TrackModel.Wrapper> trackList = i.getMessage().getBody().getTrackList();
                     LongSparseArray<List<TrackModel>> artistTrackMap = new LongSparseArray<>();
@@ -84,7 +84,8 @@ public class ApiInteractor {
                 .map(
                         map -> {
                             BaseResponseModel<ArtistModel.ListWrapper> model =
-                                    mApiManager.getTopArtists(Consts.COUNTRY_CODE).toFuture().get();
+                                    mApiManager.getTopArtists(Consts.COUNTRY_CODE, Consts.TOP_COUNT)
+                                            .toFuture().get();
 
                             return Stream.of(model.getMessage().getBody().getArtistList())
                                     .map(i -> {

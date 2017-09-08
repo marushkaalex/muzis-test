@@ -9,8 +9,14 @@ import ru.muzis.muzistest.model.TrackModel;
 
 public interface ApiManager {
     @GET("chart.artists.get")
-    Single<BaseResponseModel<ArtistModel.ListWrapper>> getTopArtists(@Query("country") String countryCode);
+    Single<BaseResponseModel<ArtistModel.ListWrapper>> getTopArtists(
+            @Query("country") String countryCode,
+            @Query("page_size") int pageSize
+    );
 
     @GET("chart.tracks.get")
-    Single<BaseResponseModel<TrackModel.ListWrapper>> getTopTracks(@Query("country") String countryCode);
+    Single<BaseResponseModel<TrackModel.ListWrapper>> getTopTracks(
+            @Query("country") String countryCode,
+            @Query("page_size") int pageSize
+    );
 }
