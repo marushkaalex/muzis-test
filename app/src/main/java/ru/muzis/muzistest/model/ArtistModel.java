@@ -2,6 +2,8 @@ package ru.muzis.muzistest.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+
 public class ArtistModel extends BaseModel {
     @JsonProperty("artist_id")
     private long id;
@@ -9,6 +11,15 @@ public class ArtistModel extends BaseModel {
     private String mbid;
     @JsonProperty("artist_name")
     private String name;
+    private List<TrackModel> tracks;
+
+    public List<TrackModel> getTracks() {
+        return tracks;
+    }
+
+    public void setTracks(List<TrackModel> tracks) {
+        this.tracks = tracks;
+    }
 
     public long getId() {
         return id;

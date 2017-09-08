@@ -70,7 +70,8 @@ public class ChartAdapter extends RecyclerView.Adapter<ChartAdapter.Invalidatabl
 
         @Override
         public void invalidate(ArtistModel model) {
-            title.setText(model.getName());
+            int trackCount = model.getTracks() == null ? 0 : model.getTracks().size();
+            title.setText(model.getName() + " " + trackCount);
         }
     }
 }

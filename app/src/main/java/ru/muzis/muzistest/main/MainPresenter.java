@@ -16,7 +16,7 @@ public class MainPresenter extends BasePresenterAbs implements MainContract.Pres
     @Override
     public void loadArtists() {
         mView.showProgress();
-        disposable(mApiInteractor.getTopArtists(
+        disposable(mApiInteractor.getTopArtiststWithTopTracks(
                 artists -> {
                     mView.hideProgress();
                     mView.showArtistList(artists);
